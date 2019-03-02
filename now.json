@@ -1,0 +1,9 @@
+{
+  "alias": "alizhdanov-gql",
+  "version": 2,
+  "builds": [{ "src": "src/index.js", "use": "@now/node-server" }],
+  "routes": [{ "src": "/.*", "dest": "src/index.js" }],
+  "env": {
+    "INSTAGRAM_TOKEN": "@instagram-token"
+  }
+}
