@@ -5,7 +5,6 @@ const {
   makeRemoteExecutableSchema,
   transformSchema,
   FilterRootFields,
-  RenameRootFields,
 } = require('graphql-tools');
 
 const link = new HttpLink({
@@ -25,11 +24,25 @@ const generateSchema = async () => {
   });
 
   return transformSchema(executableSchema, [
-    new FilterRootFields((operation, field) => ['viewer'].includes(field)),
-    new RenameRootFields((operation, name) =>
-      name === 'viewer' ? 'github' : name
-    ),
+    // TODO: is there a nicer way to filtering out root fields?
+    // filter all queries/mutations, we're gonna delegate schema
+    new FilterRootFields((operation, field) => false),
   ]);
 };
 
-module.exports = generateSchema;
+const resolvers = {
+  Query: {
+    github(parent, args, context, info) {
+      return info.mergeInfo.delegateToSchema({
+        schema: githubSchema,
+        operation: 'query',
+        fieldName: 'viewer',
+        context,
+        info,
+      });
+    },
+
+  }
+}
+
+module.exports = {generateSchema, resolvers};

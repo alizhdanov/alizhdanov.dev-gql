@@ -3,7 +3,7 @@ const path = require('path');
 const { GraphQLServer } = require('graphql-yoga');
 const { makeSchema } = require('nexus');
 const { mergeSchemas } = require('graphql-tools');
-const githubSchemaGenerator = require('./schemas/github');
+const {generateSchema: githubSchemaGenerator, resolvers: githubSchemaResolvers} = require('./schemas/github');
 const query = require('./resolvers/Query');
 
 async function startServer() {
@@ -17,12 +17,32 @@ async function startServer() {
 
   const githubSchema = await githubSchemaGenerator();
 
+  const extendableSchema = `
+    extend type Query {
+      stared(
+        ownedByViewer: Boolean
+        orderBy: StarOrder
+        after: String
+        before: String
+        first: Int
+        last: Int
+        ): StarredRepositoryConnection
+        
+      github: User!
+    }
+  `;
+
   const schema = mergeSchemas({
-    schemas: [localSchema, githubSchema],
+    schemas: [localSchema, githubSchema, extendableSchema],
+    resolvers: {
+      ...githubSchemaResolvers
+    },
   });
 
   const server = new GraphQLServer({ schema });
-  server.start(() => console.log('Server is running on localhost:4000'));
+  server.start({ port: '4444' }, ({ port }) =>
+    console.log(`Server is running on localhost:${port}`)
+  );
 }
 
 startServer().catch(error => {
