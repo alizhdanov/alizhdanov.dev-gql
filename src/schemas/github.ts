@@ -1,11 +1,12 @@
-const { HttpLink } = require('apollo-link-http');
-const fetch = require('node-fetch');
-const {
+import { HttpLink } from 'apollo-link-http';
+import fetch from 'node-fetch';
+import {
   introspectSchema,
   makeRemoteExecutableSchema,
   transformSchema,
   FilterRootFields,
-} = require('graphql-tools');
+  IGraphQLToolsResolveInfo
+} from 'graphql-tools';
 
 const link = new HttpLink({
   uri: 'https://api.github.com/graphql',
@@ -15,7 +16,7 @@ const link = new HttpLink({
   },
 });
 
-const generateSchema = async () => {
+export const generateSchema = async () => {
   const schema = await introspectSchema(link);
 
   const executableSchema = makeRemoteExecutableSchema({
@@ -30,9 +31,12 @@ const generateSchema = async () => {
   ]);
 };
 
-const resolvers = {
+// TODO: now we generate schema in resolver, we should move it out
+
+export const resolvers = {
   Query: {
-    github(parent, args, context, info) {
+    async github(parent: any, args: any, context: any, info: IGraphQLToolsResolveInfo) {
+      const githubSchema = await generateSchema();
       return info.mergeInfo.delegateToSchema({
         schema: githubSchema,
         operation: 'query',
@@ -43,6 +47,10 @@ const resolvers = {
     },
 
   }
-}
+};
 
-module.exports = {generateSchema, resolvers};
+export const extend: string = `
+  extend type Query {
+    github: User!
+  }
+`;

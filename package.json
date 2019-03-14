@@ -1,21 +1,35 @@
 {
   "name": "gql-alizhdanov.dev",
   "version": "1.0.0",
-  "main": "src/index.js",
+  "main": "src/index.ts",
   "license": "MIT",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "start": "node dist/index.js",
+    "dev": "nodemon src/index.js",
+    "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run watch-node\"",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w",
+    "watch-node": "nodemon dist/index.js",
+    "build": "npm run build-ts && npm run tslint",
+    "tslint": "tslint -c tslint.json -p tsconfig.json"
   },
   "dependencies": {
     "apollo-link-http": "^1.5.11",
-    "dotenv": "^6.2.0",
+    "dotenv": "^7.0.0",
+    "graphql": "^14.1.1",
     "graphql-tools": "^4.0.4",
     "graphql-yoga": "^1.17.4",
-    "nexus": "^0.10.0",
+    "nexus": "^0.11.3",
     "node-fetch": "^2.3.0"
   },
   "devDependencies": {
-    "nodemon": "^1.18.10"
+    "@types/aws-lambda": "^8.10.23",
+    "@types/node-fetch": "^2.1.6",
+    "@types/ws": "^6.0.1",
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.18.10",
+    "ts-node": "^8.0.3",
+    "tslint": "^5.14.0",
+    "typescript": "^3.3.3333"
   }
 }

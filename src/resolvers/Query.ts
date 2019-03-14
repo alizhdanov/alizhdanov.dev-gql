@@ -1,7 +1,7 @@
-const { objectType } = require('nexus');
-const fetch = require('node-fetch');
+import { objectType } from 'nexus';
+import fetch from 'node-fetch';
 
-const Image = objectType({
+export const Image = objectType({
   name: 'Image',
   definition(t) {
     t.int('width');
@@ -10,7 +10,7 @@ const Image = objectType({
   },
 });
 
-const Images = objectType({
+export const Images = objectType({
   name: 'Images',
   definition(t) {
     t.field('thumbnail', { type: Image });
@@ -22,7 +22,7 @@ const Images = objectType({
   },
 });
 
-const InstagramItem = objectType({
+export const InstagramItem = objectType({
   name: 'InstagramItem',
   definition(t) {
     t.id('id');
@@ -36,7 +36,7 @@ const InstagramItem = objectType({
   },
 });
 
-const Query = objectType({
+export const Query = objectType({
   name: 'Query',
   definition(t) {
     t.list.field('instagram', {
@@ -55,5 +55,3 @@ const Query = objectType({
     });
   },
 });
-
-module.exports = { Query, InstagramItem, Images, Image };
