@@ -1,3 +1,4 @@
+// tslint:disable-next-line no-var-requires
 require('dotenv').config();
 import path from 'path';
 import { GraphQLServer, Options } from 'graphql-yoga';
@@ -23,10 +24,12 @@ async function startServer() {
 
   const server = new GraphQLServer({ schema });
   server.start({ port: '4444' }, ({ port }: Options) =>
+    // tslint:disable-next-line no-console
     console.log(`Server is running on localhost:${port}`)
   );
 }
 
 startServer().catch(error => {
+  // tslint:disable-next-line no-console
   console.error(error);
 });
