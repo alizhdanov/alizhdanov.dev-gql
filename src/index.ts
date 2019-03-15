@@ -3,7 +3,7 @@ import path from 'path';
 import { GraphQLServer, Options } from 'graphql-yoga';
 import { makeSchema } from 'nexus';
 import { mergeSchemas } from 'graphql-tools';
-import { generateSchema as githubSchemaGenerator, resolvers as githubSchemaResolvers, extend as githubSchemaExtends } from './schemas/github';
+import { generateSchema as githubSchemaGenerator } from './schemas/github';
 import  * as query  from './resolvers/Query';
 
 async function startServer() {
@@ -18,10 +18,7 @@ async function startServer() {
   const githubSchema = await githubSchemaGenerator();
 
   const schema = mergeSchemas({
-    schemas: [localSchema, githubSchema, githubSchemaExtends],
-    resolvers: {
-      ...githubSchemaResolvers
-    },
+    schemas: [localSchema, githubSchema],
   });
 
   const server = new GraphQLServer({ schema });
