@@ -1,8 +1,8 @@
 {
   "alias": "alizhdanov-gql",
   "version": 2,
-  "builds": [{ "src": "src/index.js", "use": "@now/node-server" }],
-  "routes": [{ "src": "/.*", "dest": "src/index.js" }],
+  "builds": [{ "src": "src/index.ts", "use": "@now/node-server@canary" }],
+  "routes": [{ "src": "/.*", "dest": "src/index.ts" }],
   "env": {
     "INSTAGRAM_TOKEN": "@instagram-token",
     "GITHUB_TOKEN": "@github-token"

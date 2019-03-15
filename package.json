@@ -11,7 +11,8 @@
     "watch-ts": "tsc -w",
     "watch-node": "nodemon dist/index.js",
     "build": "npm run build-ts && npm run tslint",
-    "tslint": "tslint -c tslint.json -p tsconfig.json"
+    "tslint": "tslint -c tslint.json -p tsconfig.json",
+    "test": "echo \"No tests yet\""
   },
   "dependencies": {
     "apollo-link-http": "^1.5.11",
