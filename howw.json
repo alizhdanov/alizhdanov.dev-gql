@@ -1,0 +1,36 @@
+{
+  "alias": "auth-app.now.sh/",
+  "version": 2,
+  "name": "auth",
+  "builds": [
+    {
+      "src": "graphql/index.ts",
+      "use": "@now/node@canary",
+      "config": { "maxLambdaSize": "10mb" }
+    },
+    {
+      "src": "frontend/package.json",
+      "use": "@now/static-build"
+    }
+  ],
+  "routes": [
+    { "src": "/api", "dest": "/graphql/index.ts" },
+    { "src": "^/static/(.*)", "dest": "/frontend/static/$1" },
+    { "src": "^/favicon.ico", "dest": "/frontend/favicon.ico" },
+    { "src": "^/asset-manifest.json", "dest": "/frontend/asset-manifest.json" },
+    { "src": "^/manifest.json", "dest": "/frontend/manifest.json" },
+    {
+      "src": "^/service-worker.js",
+      "headers": { "cache-control": "s-maxage=0" },
+      "dest": "/frontend/service-worker.js"
+    },
+    {
+      "src": "^/precache-manifest.(.*)",
+      "dest": "/frontend/precache-manifest.$1"
+    },
+    { "src": "^/(.*)", "dest": "/frontend/index.html" }
+  ],
+  "env": {
+    "REACT_APP_GRAPHQL_URL": "/api"
+  }
+}
