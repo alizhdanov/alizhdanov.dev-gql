@@ -29,3 +29,4 @@ jobs:
       - run: yarn test
 
       - run: yarn now --token $ZEIT_TOKEN
+      - run: yarn now --token $ZEIT_TOKEN alias
