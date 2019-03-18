@@ -28,5 +28,10 @@ jobs:
       # run tests!
       - run: yarn test
 
-      - run: yarn now --token $ZEIT_TOKEN
-      - run: yarn now --token $ZEIT_TOKEN alias
+      - deploy:
+          command: |
+            yarn now --token $ZEIT_TOKEN
+
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              yarn now --token $ZEIT_TOKEN alias
+            fi

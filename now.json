@@ -6,5 +6,8 @@
   "env": {
     "INSTAGRAM_TOKEN": "@instagram-token",
     "GITHUB_TOKEN": "@github-token"
+  },
+  "github": {
+    "enabled": false
   }
 }
