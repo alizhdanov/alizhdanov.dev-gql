@@ -31,7 +31,17 @@ export interface NexusGenRootTypes {
     images: NexusGenRootTypes['Images']; // Images!
     link: string; // String!
   }
+  LoginResponse: { // root type
+    errors?: string[] | null; // [String!]
+    token?: string | null; // String
+  }
+  Mutation: {};
   Query: {};
+  SignupResponse: { // root type
+    errors?: string[] | null; // [String!]
+    id: string; // String!
+  }
+  UserResponseInterface: NexusGenRootTypes['LoginResponse'] | NexusGenRootTypes['SignupResponse'];
   String: string;
   Int: number;
   Float: number;
@@ -61,26 +71,52 @@ export interface NexusGenFieldTypes {
     likes: number; // Int!
     link: string; // String!
   }
+  LoginResponse: { // field return type
+    errors: string[] | null; // [String!]
+    token: string | null; // String
+  }
+  Mutation: { // field return type
+    login: NexusGenRootTypes['LoginResponse']; // LoginResponse!
+    signup: NexusGenRootTypes['SignupResponse']; // SignupResponse!
+  }
   Query: { // field return type
     instagram: NexusGenRootTypes['InstagramItem'][]; // [InstagramItem!]!
+  }
+  SignupResponse: { // field return type
+    errors: string[] | null; // [String!]
+    id: string; // String!
+  }
+  UserResponseInterface: { // field return type
+    errors: string[] | null; // [String!]
   }
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    login: { // args
+      email?: string | null; // String
+      password?: string | null; // String
+    }
+    signup: { // args
+      email: string; // String!
+      password: string; // String!
+    }
+  }
 }
 
 export interface NexusGenAbstractResolveReturnTypes {
+  UserResponseInterface: "LoginResponse" | "SignupResponse"
 }
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Image" | "Images" | "InstagramItem" | "Query";
+export type NexusGenObjectNames = "Image" | "Images" | "InstagramItem" | "LoginResponse" | "Mutation" | "Query" | "SignupResponse";
 
 export type NexusGenInputNames = never;
 
 export type NexusGenEnumNames = never;
 
-export type NexusGenInterfaceNames = never;
+export type NexusGenInterfaceNames = "UserResponseInterface";
 
 export type NexusGenScalarNames = "Boolean" | "Float" | "ID" | "Int" | "String";
 

@@ -23,6 +23,25 @@ type InstagramItem {
   link: String!
 }
 
+type LoginResponse implements UserResponseInterface {
+  errors: [String!]
+  token: String
+}
+
+type Mutation {
+  login(email: String, password: String): LoginResponse!
+  signup(email: String!, password: String!): SignupResponse!
+}
+
 type Query {
   instagram: [InstagramItem!]!
+}
+
+type SignupResponse implements UserResponseInterface {
+  errors: [String!]
+  id: String!
+}
+
+interface UserResponseInterface {
+  errors: [String!]
 }
