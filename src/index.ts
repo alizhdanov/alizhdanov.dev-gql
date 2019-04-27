@@ -4,7 +4,7 @@ import path from 'path';
 import { GraphQLServer, Options } from 'graphql-yoga';
 import { makeSchema } from 'nexus';
 import { mergeSchemas } from 'graphql-tools';
-import { AuthenticationError } from 'apollo-server';
+import { AuthenticationError } from 'apollo-server-core';
 import { validateToken } from './utils/jwt';
 import { generateSchema as githubSchemaGenerator } from './schemas/github';
 import * as query from './resolvers/Query';
@@ -53,6 +53,6 @@ startServer().catch(error => {
   console.error(error);
 });
 
-// TODO: some bug with nodemon
-process.on('SIGINT', () => { console.log("Bye bye!"); process.exit(); });
+// some bug with nodemon
+process.on('SIGINT', () => { process.exit(); });
 

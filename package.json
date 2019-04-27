@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "apollo-link-http": "^1.5.11",
-    "apollo-server": "^2.4.8",
+    "apollo-server-core": "^2.4.8",
     "dotenv": "^7.0.0",
     "graphql": "^14.1.1",
     "graphql-tools": "^4.0.4",
