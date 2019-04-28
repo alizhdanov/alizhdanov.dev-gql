@@ -1,9 +1,12 @@
 import { verify } from 'jsonwebtoken';
 
-export const validateToken = (token: string): boolean => {
+export const getUser = (token: string) => {
   try {
-    return !!verify(token, 'secret');
+    // @ts-ignore
+    const { data } = verify(token, 'secret');
+
+    return data;
   } catch (e) {
-    return false;
+    return null;
   }
 };
